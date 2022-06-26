@@ -3,7 +3,7 @@ import Render from "./components/Render";
 
 const App = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const [loaded, setLoaded] = useState<any[]>();
+  const [data, setData] = useState<any[]>();
 
   const getData = async () => {
     const response = await fetch("data.json", {
@@ -28,7 +28,7 @@ const App = () => {
       inputValue = !item[key];
     }
 
-    setLoaded((oldValue) => {
+    setData((oldValue) => {
       if (oldValue) {
         const newValue = [...oldValue];
         newValue[index][key] = inputValue;
@@ -41,7 +41,7 @@ const App = () => {
     setIsLoading(true);
     getData()
       .then((data) => {
-        setLoaded(data);
+        setData(data);
       })
       .finally(() => {
         setIsLoading(false);
@@ -51,7 +51,7 @@ const App = () => {
   return (
     <>
       {isLoading && <h1>Loading...</h1>}
-      {loaded && (
+      {data && (
         <div
           style={{
             width: "100%",
@@ -60,7 +60,7 @@ const App = () => {
             flexDirection: "column",
           }}
         >
-          {loaded.map((item, index) => {
+          {data.map((item, index) => {
             return (
               <div
                 key={item._id}
